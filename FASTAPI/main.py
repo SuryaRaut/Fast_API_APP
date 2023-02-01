@@ -27,28 +27,20 @@ stores = {
 items = []
 
 
-@app.get('/')  # http://127.0.0.1:8000/
+@app.get('/')
 def welcomeNote():
     return {"Welcome": "Welcome to Our Grocery App"}
     # return "Hello"
 
-
-# We need to fix our schema first of all so that our post data can fit into it
 
 @app.post('/addStore')  # http://127.0.0.1:8000/addStore
 def create_store(request: Store):
     curr_store = dict()
     store_id = uuid.uuid4().hex
 
-    # store_data['store_id'] = store_id
     curr_store['store_id'] = store_id
-
     curr_store['store_name'] = request.store_name
-
-    # store_data['items'] = []
     curr_store['items'] = []
-
-    # stores[store_id] = store_data
     stores[store_id] = curr_store
 
     return curr_store
@@ -128,7 +120,6 @@ def getitem(item_id):
     try:
         return items[item_id], 200
     except KeyError as e:
-        # return { "Error" : f"Item not Found, Exception = {e}" }, 404
         abort(404, message=f"Item not Found, Exception = {e}")
 
 
